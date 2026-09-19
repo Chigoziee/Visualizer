@@ -1,0 +1,48 @@
+# Local test data sources for exercising the Postgres/MySQL/MongoDB connectors.
+# Not used by the production Dockerfile -- this is dev/test tooling only.
+#
+# Usage:
+#   docker compose -f docker-compose.test-db.yml up -d
+#   docker compose -f docker-compose.test-db.yml down   # tears down + resets seed data
+#
+# See README.md "Test databases" section for the connection details to enter
+# in the app's Add Connection modal.
+
+services:
+  test-postgres:
+    image: postgres:16-alpine
+    container_name: visualizer-test-postgres
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: analytics
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./dev/seed/postgres:/docker-entrypoint-initdb.d:ro
+
+  test-mysql:
+    image: mysql:8.0
+    container_name: visualizer-test-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: testpass
+      MYSQL_DATABASE: customers_db
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./dev/seed/mysql:/docker-entrypoint-initdb.d:ro
+
+  test-mongo:
+    image: mongo:7
+    container_name: visualizer-test-mongo
+    command: ["--auth"]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: testuser
+      MONGO_INITDB_ROOT_PASSWORD: testpass
+      MONGO_INITDB_DATABASE: activity
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./dev/seed/mongo:/docker-entrypoint-initdb.d:ro

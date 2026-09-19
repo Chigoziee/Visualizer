@@ -1,0 +1,42 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- App runtime data (SQLite DB, encryption key, uploads, generated charts) ---
+data/
+storage/
+
+# --- Node / frontend ---
+node_modules/
+frontend/dist/
+frontend_dist/
+.vite/
+*.tsbuildinfo
+
+# --- Env / secrets ---
+.env
+.env.local
+
+# --- Editors / IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- OS cruft ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+
+
+UI/
+.claude
